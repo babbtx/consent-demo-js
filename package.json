@@ -1,0 +1,12 @@
+{
+  "name": "consent-demo-js",
+  "version": "1.0.0",
+  "description": "Demonstrates using PingDirectory consent API from browser Javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "David Babbitt <davidbabbitt@pingidentity.com>",
+  "license": "ISC"
+}
