@@ -3,6 +3,7 @@ import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import json from "rollup-plugin-json";
 import globals from "rollup-plugin-node-globals";
+import { uglify } from "rollup-plugin-uglify";
 
 export default {
   input: "consent-demo.js",
@@ -15,6 +16,7 @@ export default {
     json(),
     commonjs(),
     babel({ exclude: ["node_modules/**"] }),
-    globals()
+    globals(),
+    uglify()
   ]
 }
