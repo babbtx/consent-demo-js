@@ -72,16 +72,9 @@ regardless of theme.
 
 ### With my demo store
 
-You can demo with your own PingDirectory server and my demo store.
-This way you can use the browser inspector to see what's going on,
-and also look in the directory for consent records.
-My demo store is configured to use PingDirectory installed at `https://localhost:18443`.
+Feel free to demo with my Shopify store!
 
-1. Follow the product documentation for configuring the PingDirectory consent service and PingFederate.
-   Don't forget that PingDirectory HTTPS must be configured for port 18443.
-1. Edit `consent-demo.dsconfig`
-   1. Change the CORS URL from `https://CHANGE-ME.myshopify.com` to `https://viibl.myshopify.com`
-   1. Leave the consent service account password as `CHANGE-ME`.
-1. Import `consent-demo.dsconfig`.
-1. Go to [my demo store](https://viibl.myshopify.com) and access the store with the password `demo`.
+1. Go to [my demo store](https://babb-consent.ping-eng.com) and access the store with the password `demo`.
+1. Open up the browser's developer tools and click the network tab.
 1. Browse the catalog and view any product page.
+1. In the developer tools you can see API requests for consent definitions and consent records.
