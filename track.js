@@ -1,3 +1,3 @@
 export default () => {
-  console.log("would track page");
+  window.alert("TRACKING PAGE VIEW");
 }

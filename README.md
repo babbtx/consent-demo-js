@@ -6,7 +6,7 @@ the store can track his or her browsing behavior.
 
 ## Using the API
 
-The consent API is used in two places in this project.
+The consent API is used in three places in this project.
 
 ### Capturing and querying the consent record
 
@@ -31,6 +31,16 @@ presented to the user when asking for consent.
 
 In [consent_prompt.js](consent_prompt.js) we use the API to get the consent
 prompt language and present a modal to the user.
+
+### Building a privacy dashboard
+
+People like to change their minds. Maintaining trust with your users means
+giving them the option to review and update their privacy settings.
+
+In [consent_panel.js](consent_panel.js) we use the API to retrieve all consent
+records for the user and display them in the page alongside toggle switches.
+If the user toggles the privacy settings, we use the API to update the record
+at the server.
 
 ## Demo
 
@@ -78,3 +88,5 @@ Feel free to demo with my Shopify store!
 1. Open up the browser's developer tools and click the network tab.
 1. Browse the catalog and view any product page.
 1. In the developer tools you can see API requests for consent definitions and consent records.
+1. Login as a user and go to the user profile page.
+1. Toggle the consent record state and go back to browse more products.
