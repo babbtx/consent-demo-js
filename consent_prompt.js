@@ -2,6 +2,7 @@ import axios from "axios";
 import env from "./environment.json";
 import MicroModal from "micromodal";
 import template from "./consent_prompt.ejs";
+import "./consent_prompt.scss";
 
 class ConsentPrompt {
   constructor(definition) {
