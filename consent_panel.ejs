@@ -1,0 +1,8 @@
+<ul class="consent-panel">
+  <% locals.consents.forEach(function(consent) { %>
+    <li class="consent-panel__item">
+      <span class="consent-panel__item-title"><%= consent.title %></span>
+      <span class="consent-panel__item-description"><%= consent.description %></span>
+    </li>
+  <% }); %>
+</ul>
