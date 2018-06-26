@@ -1,55 +1,13 @@
 import axios from "axios";
 import env from "./environment.json";
 import MicroModal from "micromodal";
-
-const html =
-`<div id="consent-prompt-modal" class="consent-prompt-modal" aria-hidden="true">
-  <div class="consent-prompt-modal__overlay" tabindex="-1" data-micromodal-close>
-    <div class="consent-prompt-modal__container" role="dialog" aria-modal="true" aria-labelledby="consent-prompt-modal-title" >
-      <header class="consent-prompt-modal__header">
-        <h2 id="consent-prompt-modal-title" class="consent-prompt-modal__title">
-          May we &hellip;
-        </h2>
-        <button class="consent-prompt-modal__close" aria-label="Close modal" data-micromodal-close></button>
-      </header>
-      <main class="consent-prompt-modal__body">
-        We need your permission to track and keep data related to you.
-        <div>
-          <div class="consent-prompt-modal__body_title">
-            What do we need ?
-          </div>
-          <div id="consent-prompt-modal-body-what">What</div>
-        </div>
-        <div>
-          <div class="consent-prompt-modal__body_title">
-            Why do we need it ?
-          </div>
-          <div id="consent-prompt-modal-body-why">Why</div>
-        </div>
-      </main>
-      <footer class="consent-prompt-modal__footer">
-        <button class="consent-prompt-modal__button" data-response="accepted" data-micromodal-close>Yes</button>
-        <button class="consent-prompt-modal__button" data-micromodal-close>No</button>
-      </footer>
-    </div>
-  </div>
-</div>`;
+import template from "./consent_prompt.ejs";
+import "./consent_prompt.scss";
 
 class ConsentPrompt {
   constructor(definition) {
     this.definition = definition;
     this.accepted = false;
-    ConsentPrompt.init();
-  }
-
-  static init() {
-    ConsentPrompt.acceptedClicked = false;
-    if ($("#consent-prompt-modal").length === 0) {
-      $("body").append(html);
-      $("#consent-prompt-modal .consent-prompt-modal__button[data-response=accepted]").on("click", () => {
-        ConsentPrompt.acceptedClicked = true;
-      });
-    }
   }
 
   /*
@@ -62,9 +20,18 @@ class ConsentPrompt {
     this.version = response.data.version;
     this.dataText = response.data.dataText;
     this.purposeText = response.data.purposeText;
-    // also put the text into the modal
-    $("#consent-prompt-modal-body-what").text(this.dataText);
-    $("#consent-prompt-modal-body-why").text(this.purposeText);
+    // also render the modal html to the page (hidden)
+    const html = template({ what: this.dataText, why: this.purposeText });
+    if ($("#consent-prompt-modal").length === 0) {
+      $("body").append(html);
+    }
+    else {
+      $("#consent-prompt-modal").replaceWith(html);
+    }
+    // on click of the accept button, store the fact that it was accepted in the DOM
+    $("#consent-prompt-modal .consent-prompt-modal__button[data-response=accepted]").on("click", () => {
+      $("#consent-prompt-modal").data("accepted", true);
+    });
   }
 
   /*
@@ -81,9 +48,9 @@ class ConsentPrompt {
 
   async prompt() {
     await this.buildPrompt();
-    ConsentPrompt.acceptedClicked = false;
     await this.showPromptWithPromise();
-    this.accepted = ConsentPrompt.acceptedClicked;
+    // retrieve whether it was accepted from the DOM
+    this.accepted = $("#consent-prompt-modal").data("accepted");
   }
 }
 

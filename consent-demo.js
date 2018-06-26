@@ -4,6 +4,7 @@ import env from "./environment.json";
 import getCurrentUser from "./get_current_user";
 import trackPageView from "./track";
 import ConsentPrompt from "./consent_prompt";
+import maybeShowConsentPanel from "./consent_panel";
 
 const consentSubject = getCurrentUser();
 
@@ -116,4 +117,6 @@ async function saveConsent(prompt) {
 
 if (window.location.pathname.startsWith("/products/")) {
   maybeTrackBrowsingHistory();
+} else {
+  maybeShowConsentPanel();
 }
