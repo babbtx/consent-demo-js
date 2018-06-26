@@ -22,6 +22,14 @@ async function getConsents() {
   }
 }
 
+async function updateConsentStatus(consentId, accepted) {
+  const url = `${env.consentServer}/consent/v1/consents/${consentId}`;
+  const updates = {
+    status: accepted ? "accepted" : "denied",
+  };
+  return await axios.patch(url, updates, {auth: {username: env.consentAccount, password: env.consentPassword}});
+}
+
 async function showConsentPanel() {
   let consents = await getConsents();
   if (consents.length > 0) {
@@ -36,9 +44,24 @@ async function showConsentPanel() {
   }
 }
 
+let needsEvents = true;
+
+function addEventListeners() {
+  if (needsEvents) {
+    needsEvents = false;
+    $("#consent-panel-container").on("change", "input[type=checkbox]", (evt) => {
+      const $input = $(evt.target);
+      const checked = $input.is(":checked");
+      const consentId = $input.parents("[data-consent-id]").attr("data-consent-id");
+      updateConsentStatus(consentId, checked);
+    });
+  }
+}
+
 function maybeShowConsentPanel() {
   if ($("#consent-panel-container").length > 0) {
     showConsentPanel();
+    addEventListeners();
   }
 }
 
