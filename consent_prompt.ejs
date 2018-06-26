@@ -1,0 +1,31 @@
+<div id="consent-prompt-modal" class="consent-prompt-modal" aria-hidden="true">
+  <div class="consent-prompt-modal__overlay" tabindex="-1" data-micromodal-close>
+    <div class="consent-prompt-modal__container" role="dialog" aria-modal="true" aria-labelledby="consent-prompt-modal-title" >
+      <header class="consent-prompt-modal__header">
+        <h2 id="consent-prompt-modal-title" class="consent-prompt-modal__title">
+          May we &hellip;
+        </h2>
+        <button class="consent-prompt-modal__close" aria-label="Close modal" data-micromodal-close></button>
+      </header>
+      <main class="consent-prompt-modal__body">
+        We need your permission to track and keep data related to you.
+        <div>
+          <div class="consent-prompt-modal__body_title">
+            What do we need ?
+          </div>
+          <div><%= locals.what %></div>
+        </div>
+        <div>
+          <div class="consent-prompt-modal__body_title">
+            Why do we need it ?
+          </div>
+          <div><%= locals.why %></div>
+        </div>
+      </main>
+      <footer class="consent-prompt-modal__footer">
+        <button class="consent-prompt-modal__button" data-response="accepted" data-micromodal-close>Yes</button>
+        <button class="consent-prompt-modal__button" data-micromodal-close>No</button>
+      </footer>
+    </div>
+  </div>
+</div>

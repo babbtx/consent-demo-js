@@ -2,6 +2,7 @@ import babel from "rollup-plugin-babel";
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import json from "rollup-plugin-json";
+import ejs from "rollup-plugin-ejs";
 import globals from "rollup-plugin-node-globals";
 
 export default {
@@ -13,6 +14,7 @@ export default {
   plugins: [
     resolve({ browser: true }),
     json(),
+    ejs({ compilerOptions: { strict: true, _with: false, client: true } }),
     commonjs(),
     babel({ exclude: ["node_modules/**"] }),
     globals()
