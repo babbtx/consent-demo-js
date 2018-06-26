@@ -1,12 +1,17 @@
+.consent-panel__item:first-child {
+  margin-top: 3rem;
+}
+
 .consent-panel__item {
   position: relative;
   list-style: none;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .consent-panel__item_toggle {
   width: 100px;
   float: right;
+  margin-left: 3em;
   position: relative;
 }
 
@@ -15,5 +20,16 @@
 }
 
 .consent-panel__item_title {
-  margin-bottom: 0;
+  margin-bottom: 6px;
+}
+
+.consent-panel__item_description {
+  margin-bottom: 6px;
+  color: #69727b;
+  line-height: 1.4em;
+}
+
+.consent-panel__item_updated {
+  font-style: italic;
+  color: #69727b;
 }

@@ -30,18 +30,35 @@ async function updateConsentStatus(consentId, accepted) {
   return await axios.patch(url, updates, {auth: {username: env.consentAccount, password: env.consentPassword}});
 }
 
+function formatUpdatedDateTime(updatedDate) {
+  return moment(updatedDate).format("[Last updated at] DD/MM/YYYY [at] h:mm A[.]");
+}
+
 async function showConsentPanel() {
   let consents = await getConsents();
   if (consents.length > 0) {
     consents = consents.map((consent) => {
       const title = _capitalize(_lowerCase(consent.definition.id));
       const description = `We use ${_lowerFirst(consent.dataText)} in order ${_lowerFirst(consent.purposeText)}.`;
-      const updatedDescription = moment(consent.updatedDate).format("[Last updated at] DD/MM/YYYY [at] h:mm A[.]");
-      return { ...consent, title, description, updatedDescription };
+      const updatedAtDescription = formatUpdatedDateTime(consent.updatedDate);
+      return { ...consent, title, description, updatedAtDescription };
     });
     const html = template({ consents: consents });
     $("#consent-panel-container").html(html);
   }
+  else {
+    $("#consent-panel-container").html("<p>No preferences have been saved yet.</p>");
+  }
+}
+
+async function onCheckboxChange(evt) {
+  const $input = $(evt.target);
+  const $consent = $input.parents("[data-consent-id]");
+  const checked = $input.is(":checked");
+  const consentId = $consent.attr("data-consent-id");
+  const updatedConsent = await updateConsentStatus(consentId, checked);
+  const updatedAtDescription = formatUpdatedDateTime(updatedConsent.updatedDate);
+  $consent.find(".consent-panel__item_updated").text(updatedAtDescription);
 }
 
 let needsEvents = true;
@@ -49,16 +66,21 @@ let needsEvents = true;
 function addEventListeners() {
   if (needsEvents) {
     needsEvents = false;
-    $("#consent-panel-container").on("change", "input[type=checkbox]", (evt) => {
-      const $input = $(evt.target);
-      const checked = $input.is(":checked");
-      const consentId = $input.parents("[data-consent-id]").attr("data-consent-id");
-      updateConsentStatus(consentId, checked);
-    });
+    $("#consent-panel-container").on("change", "input[type=checkbox]", onCheckboxChange);
   }
 }
 
 function maybeShowConsentPanel() {
+  let retry = true;
+  if (typeof($) === "undefined") {
+    if (retry) {
+      retry = false;
+      document.addEventListener("DOMContentLoaded", function() {
+        maybeShowConsentPanel();
+      });
+    }
+    return;
+  }
   if ($("#consent-panel-container").length > 0) {
     showConsentPanel();
     addEventListeners();

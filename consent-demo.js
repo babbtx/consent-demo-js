@@ -115,8 +115,8 @@ async function saveConsent(prompt) {
   }
 }
 
-// if (window.location.pathname.startsWith("/products/")) {
+if (window.location.pathname.startsWith("/products/")) {
   maybeTrackBrowsingHistory();
-// } else {
+} else {
   maybeShowConsentPanel();
-// }
+}
