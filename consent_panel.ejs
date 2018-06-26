@@ -1,8 +1,21 @@
 <ul class="consent-panel">
   <% locals.consents.forEach(function(consent) { %>
-    <li class="consent-panel__item">
-      <span class="consent-panel__item-title"><%= consent.title %></span>
-      <span class="consent-panel__item-description"><%= consent.description %></span>
+    <li class="consent-panel__item" data-consent-id="<%= consent.id %>" >
+      <div class="consent-panel__item_toggle">
+        <label class="switch-light switch-ios" onclick="">
+          <% var checked = consent.status === "accepted" ? "checked" : "" %>
+          <input type="checkbox" <%- checked %> >
+          <strong class="consent-panel__item_toggle_label">Allowed</strong>
+          <span>
+            <span>No</span>
+            <span>Yes</span>
+            <a></a>
+          </span>
+        </label>
+      </div>
+      <h3 class="consent-panel__item_title"><%= consent.title %></h3>
+      <div class="consent-panel__item_description"><%= consent.description %></div>
+      <div class="consent-panel__item_updated"><%= consent.updatedDescription %></div>
     </li>
   <% }); %>
 </ul>

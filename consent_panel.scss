@@ -1,0 +1,19 @@
+.consent-panel__item {
+  position: relative;
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+.consent-panel__item_toggle {
+  width: 100px;
+  float: right;
+  position: relative;
+}
+
+.consent-panel__item_toggle_label {
+  display: none;
+}
+
+.consent-panel__item_title {
+  margin-bottom: 0;
+}
