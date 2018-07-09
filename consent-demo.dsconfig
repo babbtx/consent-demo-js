@@ -14,6 +14,7 @@ dsconfig create-http-servlet-cross-origin-policy \
     --policy-name "Store Access to Consent API"  \
     --set cors-allowed-methods:GET  \
     --set cors-allowed-methods:POST  \
+    --set cors-allowed-methods:PATCH  \
     --set cors-allowed-origins:https://CHANGE-ME.myshopify.com
 
 dsconfig set-http-servlet-extension-prop \
